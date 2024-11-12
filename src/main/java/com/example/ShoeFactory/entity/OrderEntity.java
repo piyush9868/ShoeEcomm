@@ -14,6 +14,10 @@ public class OrderEntity {
     @JoinColumn(name = "fk_shoe_id")
     private ShoeEntity shoeEntity;
 
+    @ManyToOne
+    @JoinColumn(name = "fk_user_id")
+    private UserEntity userEntity;
+
     public Integer getOrderId() {
         return orderId;
     }

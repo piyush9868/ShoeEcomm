@@ -6,7 +6,7 @@ import org.apache.catalina.User;
 import org.aspectj.weaver.ast.Or;
 
 @Entity
-@Table(name = "shoeTable")
+@Table(name = "shoe_table")
 public class ShoeEntity {
 
     @Id
