@@ -1,7 +1,6 @@
 package com.example.ShoeFactory.controller;
 
 
-import com.example.ShoeFactory.entity.UserEntity;
 import com.example.ShoeFactory.model.User;
 import com.example.ShoeFactory.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

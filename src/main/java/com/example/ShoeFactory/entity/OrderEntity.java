@@ -1,36 +1,49 @@
 package com.example.ShoeFactory.entity;
 
+import com.example.ShoeFactory.model.Order;
+import com.example.ShoeFactory.model.enums.OrderStatus;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "order_table")
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class OrderEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer orderId;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "fk_shoe_id")
-    private ShoeEntity shoeEntity;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "order_shoe_join",
+            joinColumns = @JoinColumn(name = "order_id"),
+            inverseJoinColumns = @JoinColumn(name = "shoe_id")
+    )
+    private List<ShoeEntity> shoeEntity;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "fk_user_id")
     private UserEntity userEntity;
 
-    public Integer getOrderId() {
-        return orderId;
-    }
+    private int orderTotal;
+    private OrderStatus orderStatus;
 
-    public void setOrderId(Integer orderId) {
-        this.orderId = orderId;
-    }
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "fk_payment_id")
+    private PaymentEntity paymentEntity;
+    private String invoiceLink;
 
-    public ShoeEntity getShoeEntity() {
-        return shoeEntity;
-    }
+    @Temporal(TemporalType.DATE)
+    private Date orderTimeStamp;
 
-    public void setShoeEntity(ShoeEntity shoeEntity) {
-        this.shoeEntity = shoeEntity;
-    }
 }
