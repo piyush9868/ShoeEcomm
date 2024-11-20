@@ -1,12 +1,14 @@
 package com.example.ShoeFactory.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
 import org.antlr.v4.runtime.misc.NotNull;
 import org.apache.catalina.User;
 import org.aspectj.weaver.ast.Or;
 
 @Entity
 @Table(name = "shoe_table")
+@Data
 public class ShoeEntity {
 
     @Id
@@ -15,28 +17,4 @@ public class ShoeEntity {
 
     private String name;
     private Integer price;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Integer getPrice() {
-        return price;
-    }
-
-    public void setPrice(Integer price) {
-        this.price = price;
-    }
 }

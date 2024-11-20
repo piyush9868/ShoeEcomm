@@ -5,18 +5,12 @@ import com.example.ShoeFactory.entity.PaymentEntity;
 import com.example.ShoeFactory.entity.ShoeEntity;
 import com.example.ShoeFactory.entity.UserEntity;
 import com.example.ShoeFactory.model.enums.OrderStatus;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Date;
 import java.util.List;
 
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
+@Data
 public class Order {
     private Integer orderId;
     private List<ShoeEntity> shoeEntity;
