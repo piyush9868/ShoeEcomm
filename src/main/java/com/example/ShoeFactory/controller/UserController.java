@@ -3,6 +3,7 @@ package com.example.ShoeFactory.controller;
 
 import com.example.ShoeFactory.model.User;
 import com.example.ShoeFactory.service.UserService;
+import com.example.ShoeFactory.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;

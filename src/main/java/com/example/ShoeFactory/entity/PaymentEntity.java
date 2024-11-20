@@ -2,17 +2,11 @@ package com.example.ShoeFactory.entity;
 
 import com.example.ShoeFactory.model.enums.PaymentMode;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Table(name = "payment_table")
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
+@Data
 public class PaymentEntity {
 
     @Id
