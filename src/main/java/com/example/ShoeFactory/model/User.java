@@ -13,6 +13,7 @@ public class User {
     String lastName;
     String emailId;
     String password;
+    String role;
     List<AddressEntity> allAddresses;
     List<OrderEntity> allOrders;
 }

@@ -1,44 +1,53 @@
 package com.example.ShoeFactory.controller;
 
-
 import com.example.ShoeFactory.model.User;
+import com.example.ShoeFactory.security.JWTTokenProvider;
 import com.example.ShoeFactory.service.UserService;
-import com.example.ShoeFactory.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
-import org.springframework.http.HttpStatus;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/auth")
 public class UserController {
 
     @Autowired
-    UserService userService;
+    @Lazy
+    private AuthenticationManager authenticationManager;
 
-    /*
-    Provide first name, last name, email and password to complete the sign-up
-     */
-    @PostMapping(value = "/sign-up", consumes = "application/json")
-    public ResponseEntity<?> signUp(@RequestBody User user){
-        return ResponseEntity.status(HttpStatus.OK).body(userService.createNewUser(user));
+    @Autowired
+    private JWTTokenProvider jwtTokenProvider;
+
+    @Autowired
+    @Lazy
+    private UserService userService;
+
+
+    @PostMapping("/signup")
+    public ResponseEntity<String> signup(@RequestBody User user) {
+        userService.createNewUser(user);
+        return ResponseEntity.ok("User registered successfully");
     }
 
-    @GetMapping("/getUserByEmail")
-    public ResponseEntity<?> getUserByEmailId(@RequestParam String emailId){
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestParam String username, @RequestParam String password,
+                                        @RequestParam String role) {
         try {
-            User user = userService.getUserByEmailId(emailId);
-            if(user == null){
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No user with the given email ID.");
-            }
-            return ResponseEntity.status(HttpStatus.OK).body(user);
-        }
-        catch (DataAccessException e){
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("DataBase error");
-        }
-        catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(username, password)
+            );
+            String token = jwtTokenProvider.generateToken(authentication.getName(), role);
+            return ResponseEntity.ok(token);
+        } catch (UsernameNotFoundException usernameNotFoundException) {
+            return ResponseEntity.status(401).body(usernameNotFoundException.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(401).body("Invalid Password");
         }
     }
-
 }
+

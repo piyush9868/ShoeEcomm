@@ -8,15 +8,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/shoe")
 public class ShoeController {
 
     @Autowired
     ShoeOpsService shoeOpsService;
 
     @PostMapping("/save")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> saveShoe(@RequestParam String name, @RequestParam int price) {
         Shoe shoe = new Shoe();
         shoe.setName(name);
@@ -25,6 +28,7 @@ public class ShoeController {
     }
 
     @GetMapping("/get/{shoeId}")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> getShoe(@PathVariable Integer shoeId){
         try {
             ShoeEntity shoeEntity = shoeOpsService.findShoeById(shoeId);

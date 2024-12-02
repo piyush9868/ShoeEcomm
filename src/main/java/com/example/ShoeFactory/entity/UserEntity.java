@@ -1,6 +1,7 @@
 package com.example.ShoeFactory.entity;
 
 import com.example.ShoeFactory.model.User;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.springframework.aot.generate.GeneratedTypeReference;
@@ -14,22 +15,28 @@ public class UserEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer userId;
+    private Integer userId;
 
     @Column(name = "first_name")
-    String firstName;
+    private String firstName;
 
     @Column(name = "last_name")
-    String lastName;
+    private String lastName;
 
-    String emailId;
-    String password;
+    @Column(unique = true, nullable = false)
+    private String emailId;
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @Column(unique = true, nullable = false)
+    private String password;
+
+    private String role;
 
     @OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL)
-    List<AddressEntity> allAddresses;
+    private List<AddressEntity> allAddresses;
 
     @OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL)
-    List<OrderEntity> allOrders;
+    private List<OrderEntity> allOrders;
 
     public User mapToUser() {
         User user = new User();
