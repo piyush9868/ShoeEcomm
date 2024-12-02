@@ -11,6 +11,8 @@ public class AddressEntity {
     Integer id;
     String address;
     String landmark;
+
+    @Column(name = "contact")
     Long contactNumber;
 
     @ManyToOne

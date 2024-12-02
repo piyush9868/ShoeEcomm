@@ -1,5 +1,6 @@
 package com.example.ShoeFactory.controller;
 
+import com.example.ShoeFactory.model.LoginDetails;
 import com.example.ShoeFactory.model.User;
 import com.example.ShoeFactory.security.JWTTokenProvider;
 import com.example.ShoeFactory.service.UserService;
@@ -35,13 +36,12 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestParam String username, @RequestParam String password,
-                                        @RequestParam String role) {
+    public ResponseEntity<String> login(@RequestBody LoginDetails loginDetails) {
         try {
             Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(username, password)
+                    new UsernamePasswordAuthenticationToken(loginDetails.getUsername(), loginDetails.getPassword())
             );
-            String token = jwtTokenProvider.generateToken(authentication.getName(), role);
+            String token = jwtTokenProvider.generateToken(authentication.getName(), "ROLE_"+loginDetails.getRole());
             return ResponseEntity.ok(token);
         } catch (UsernameNotFoundException usernameNotFoundException) {
             return ResponseEntity.status(401).body(usernameNotFoundException.getMessage());

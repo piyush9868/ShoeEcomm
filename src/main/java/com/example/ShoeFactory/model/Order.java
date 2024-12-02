@@ -12,7 +12,6 @@ import java.util.List;
 
 @Data
 public class Order {
-    private Integer orderId;
     private List<ShoeEntity> shoeEntity;
     private UserEntity userEntity;
     private int orderTotal;
@@ -25,7 +24,6 @@ public class Order {
         OrderEntity orderEntity = new OrderEntity();
         orderEntity.setPaymentEntity(this.paymentEntity);
         orderEntity.setShoeEntity(this.shoeEntity);
-        orderEntity.setOrderId(this.orderId);
         orderEntity.setOrderStatus(this.orderStatus);
         orderEntity.setUserEntity(this.userEntity);
         orderEntity.setOrderTimeStamp(this.orderTimeStamp);

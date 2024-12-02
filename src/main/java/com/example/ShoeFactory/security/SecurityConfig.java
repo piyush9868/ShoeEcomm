@@ -33,6 +33,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         // permit only sign-up and login requests without auth
                         .requestMatchers("/auth/login", "/auth/signup").permitAll()
+                        .requestMatchers("/shoe/save").hasRole("ADMIN")
+                        .requestMatchers("/shoe/*").hasRole("USER")
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)

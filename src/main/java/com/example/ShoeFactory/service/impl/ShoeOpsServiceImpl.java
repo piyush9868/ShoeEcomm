@@ -22,9 +22,7 @@ public class ShoeOpsServiceImpl implements ShoeOpsService {
 
     public ResponseEntity<?> saveNewShoe(Shoe shoe) {
         try {
-            ShoeEntity shoeEntity = new ShoeEntity();
-            shoeEntity.setName(shoe.getName());
-            shoeEntity.setPrice(shoe.getPrice());
+            ShoeEntity shoeEntity = shoe.mapDataObjToEntity();
             ShoeEntity savedEntity = shoeRepository.save(shoeEntity);
             return ResponseEntity.ok(savedEntity);
         }

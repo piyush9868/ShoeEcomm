@@ -14,6 +14,7 @@ public class OrderEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "order_id")
     private Integer orderId;
 
     @ManyToMany(cascade = CascadeType.ALL)
@@ -28,15 +29,22 @@ public class OrderEntity {
     @JoinColumn(name = "fk_user_id")
     private UserEntity userEntity;
 
+    @Column(name = "order_total")
     private int orderTotal;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "order_status")
     private OrderStatus orderStatus;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "fk_payment_id")
     private PaymentEntity paymentEntity;
+
+    @Column(name = "invoice_link")
     private String invoiceLink;
 
     @Temporal(TemporalType.DATE)
+    @Column(name = "order_date")
     private Date orderTimeStamp;
 
 }

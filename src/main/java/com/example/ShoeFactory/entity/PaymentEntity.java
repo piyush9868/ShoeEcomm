@@ -11,9 +11,13 @@ public class PaymentEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "payment_id")
     private String id;
 
     @OneToOne(mappedBy = "paymentEntity")
     private OrderEntity orderEntity;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "payment_mode")
     private PaymentMode paymentMode;
 }

@@ -15,6 +15,7 @@ public class UserEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
     private Integer userId;
 
     @Column(name = "first_name")
@@ -23,7 +24,7 @@ public class UserEntity {
     @Column(name = "last_name")
     private String lastName;
 
-    @Column(unique = true, nullable = false)
+    @Column(name = "email_id", unique = true, nullable = false)
     private String emailId;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)

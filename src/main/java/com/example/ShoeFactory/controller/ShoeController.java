@@ -19,16 +19,11 @@ public class ShoeController {
     ShoeOpsService shoeOpsService;
 
     @PostMapping("/save")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> saveShoe(@RequestParam String name, @RequestParam int price) {
-        Shoe shoe = new Shoe();
-        shoe.setName(name);
-        shoe.setPrice(price);
+    public ResponseEntity<?> saveShoe(@RequestBody Shoe shoe) {
         return shoeOpsService.saveNewShoe(shoe);
     }
 
     @GetMapping("/get/{shoeId}")
-    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> getShoe(@PathVariable Integer shoeId){
         try {
             ShoeEntity shoeEntity = shoeOpsService.findShoeById(shoeId);
