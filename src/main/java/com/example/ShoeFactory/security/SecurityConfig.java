@@ -32,7 +32,7 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(auth -> auth
                         // permit only sign-up and login requests without auth
-                        .requestMatchers("/auth/login", "/auth/signup").permitAll()
+                        .requestMatchers("/auth/login", "/auth/signup","/health").permitAll()
                         .requestMatchers("/shoe/save").hasRole("ADMIN")
                         .requestMatchers("/shoe/*").hasRole("USER")
                         .anyRequest().authenticated()
